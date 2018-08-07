@@ -7,6 +7,11 @@ import Loading from './components/authentication/Loading'
 import SignUp from './components/authentication/Signup'
 import Login from './components/authentication/Login'
 
+// IMPORT MAIN NAVIGATION COMPONENTS
+import Account from './components/src/account/Index'
+import SusuGroup from './components/src/susuGroup/Index'
+import Deposit from './components/src/deposit/Index'
+
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: 'AIzaSyDRGm7NkGECZDcTO06WW3iMONfx94P8gq4',
@@ -22,7 +27,10 @@ const App = createSwitchNavigator(
     Loading,
     SignUp,
     Login,
-    Main
+    Main,
+    Account,
+    SusuGroup,
+    Deposit
   },
   {
     initialRouteName: 'Loading'
