@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
-import { Text } from 'react-native'
+import { Text, View, Button } from 'react-native'
 
 class Deposit extends Component {
   render() {
-    return <Text>HI FROM Deposit</Text>
+    return (
+      <View>
+        <Text>HI FROM Deposit</Text>
+      </View>
+    )
   }
 }
 

@@ -1,18 +1,15 @@
 // SignUp.js
 import React from 'react'
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
-import firebase from 'firebase'
+import { auth } from 'firebase'
 
 export default class SignUp extends React.Component {
-  state = { email: '', password: '', errorMessage: null }
+  constructor(props) {
+    super(props)
+    this.state = { email: '', password: '', errorMessage: null }
 
-  handleSignUp = () => {
-    // TODO: Firebase stuff...
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => this.props.navigation.navigate('Main'))
-      .catch(error => this.setState({ errorMessage: error.message }))
+    // FUNCTIONS BINDING
+    this.handleSignup = this.handleSignup.bind(this)
   }
 
   render() {
@@ -44,6 +41,13 @@ export default class SignUp extends React.Component {
         />
       </View>
     )
+  }
+
+  handleSignUp() {
+    auth()
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => this.props.navigation.navigate('MainApp'))
+      .catch(error => this.setState({ errorMessage: error.message }))
   }
 }
 

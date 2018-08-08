@@ -21,11 +21,16 @@ export default class Index extends React.Component {
   }
 
   render() {
+    const { navigate } = this.props.navigation
     const { currentUser } = this.state
     return (
       <View style={styles.container}>
-        <Text>Hi {currentUser && currentUser.email}!</Text>
-        <NavBoxes />
+        <NavBoxes
+          navigate={navigate}
+          account="Account"
+          susuGroup="SusuGroup"
+          deposit="Deposit"
+        />
       </View>
     )
   }
@@ -35,7 +40,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: '#f1f2f6',
-    justifyContent: 'center',
     height: Dimensions.get('window').height
   }
 })

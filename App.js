@@ -1,16 +1,13 @@
+import React, { Component } from 'react'
+import { View } from 'react-native'
 import { createSwitchNavigator } from 'react-navigation'
 import firebase from 'firebase'
 
 // import the different screens
-import Main from './components/Index.js'
+import MainApp from './components/StackNavigation'
 import Loading from './components/authentication/Loading'
 import SignUp from './components/authentication/Signup'
 import Login from './components/authentication/Login'
-
-// IMPORT MAIN NAVIGATION COMPONENTS
-import Account from './components/src/account/Index'
-import SusuGroup from './components/src/susuGroup/Index'
-import Deposit from './components/src/deposit/Index'
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -22,19 +19,16 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 // create our app's navigation stack
-const App = createSwitchNavigator(
+const AppAuthentication = createSwitchNavigator(
   {
     Loading,
     SignUp,
     Login,
-    Main,
-    Account,
-    SusuGroup,
-    Deposit
+    MainApp
   },
   {
     initialRouteName: 'Loading'
   }
 )
 
-export default App
+export default AppAuthentication

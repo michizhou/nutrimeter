@@ -1,15 +1,6 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import { Card, Icon } from 'react-native-elements'
-
-/*
-  * ADD navigation for the user clicks on any of the boxes
-    the box will redirect the user to the corresponding link.
-
-    - Will receive the components to redirect to as props
-
-  * Add color interaction to the icon being press
-*/
 
 export default class NavBoxes extends Component {
   render() {
@@ -22,6 +13,7 @@ export default class NavBoxes extends Component {
             type="material-community"
             color="#517fa4"
             containerStyle={styles.icon}
+            onPress={() => this.props.navigate(this.props.susuGroup)}
           />
           <Text style={styles.desc}>Create a new Susu Group</Text>
         </Card>
@@ -33,6 +25,7 @@ export default class NavBoxes extends Component {
             type="material-community"
             color="#517fa4"
             containerStyle={styles.icon}
+            onPress={() => this.props.navigate(this.props.deposit)}
           />
           <Text style={styles.desc}>Make a deposit to a group</Text>
         </Card>
@@ -44,6 +37,7 @@ export default class NavBoxes extends Component {
             type="material-community"
             color="#517fa4"
             containerStyle={styles.icon}
+            onPress={() => this.props.navigate(this.props.account)}
           />
           <Text style={styles.desc}>Visit your Susu account</Text>
         </Card>
@@ -55,11 +49,13 @@ export default class NavBoxes extends Component {
 const styles = StyleSheet.create({
   mainNav: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    justifyContent: 'center',
+    height: Dimensions.get('window').height * 0.85
   },
 
   desc: {
-    marginBottom: 5,
+    // marginBottom: 5,
     textAlign: 'center'
   },
 

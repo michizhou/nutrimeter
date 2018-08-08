@@ -4,12 +4,12 @@ import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import { auth } from 'firebase'
 
 export default class Login extends React.Component {
-  state = { email: '', password: '', errorMessage: null }
-  handleLogin = () => {
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => this.props.navigation.navigate('Main'))
-      .catch(error => this.setState({ errorMessage: error.message }))
+  constructor(props) {
+    super(props)
+    this.state = { email: '', password: '', errorMessage: null }
+
+    // FUNCTIONS BINDING
+    this.handleLogin = this.handleLogin.bind(this)
   }
 
   render() {
@@ -41,6 +41,13 @@ export default class Login extends React.Component {
         />
       </View>
     )
+  }
+
+  handleLogin() {
+    auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(() => this.props.navigation.navigate('MainApp'))
+      .catch(error => this.setState({ errorMessage: error.message }))
   }
 }
 const styles = StyleSheet.create({

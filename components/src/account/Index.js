@@ -1,9 +1,15 @@
 import React, { Component } from 'react'
-import { Text } from 'react-native'
+import { Text, Button, View } from 'react-native'
 
 class Account extends Component {
   render() {
-    return <Text>HI FROM Account</Text>
+    const { goBack } = this.props.navigation
+
+    return (
+      <View>
+        <Text>HI FROM Account</Text>
+      </View>
+    )
   }
 }
 
