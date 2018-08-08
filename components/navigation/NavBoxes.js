@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { Card, Icon } from 'react-native-elements'
+import percent from 'rnative-percent'
 
 export default class NavBoxes extends Component {
   render() {
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    height: Dimensions.get('window').height * 0.85
+    height: percent(85)
   },
 
   desc: {

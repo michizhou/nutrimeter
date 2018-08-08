@@ -1,13 +1,7 @@
 import React from 'react'
-import {
-  StyleSheet,
-  Text,
-  Platform,
-  Image,
-  View,
-  Dimensions
-} from 'react-native'
+import { StyleSheet, Text, Platform, Image, View } from 'react-native'
 import { auth } from 'firebase'
+import percent from 'rnative-percent'
 
 // Navigation
 import NavBoxes from './navigation/NavBoxes'
@@ -40,6 +34,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: '#f1f2f6',
-    height: Dimensions.get('window').height
+    height: percent(100)
   }
 })
