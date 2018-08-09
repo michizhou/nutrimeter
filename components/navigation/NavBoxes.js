@@ -7,7 +7,7 @@ export default class NavBoxes extends Component {
   render() {
     return (
       <View style={styles.mainNav}>
-        <Card title="Organize">
+        <Card title="Susu">
           <Icon
             reverse
             name="account-multiple-plus"
@@ -16,7 +16,7 @@ export default class NavBoxes extends Component {
             containerStyle={styles.icon}
             onPress={() => this.props.navigate(this.props.susuGroup)}
           />
-          <Text style={styles.desc}>Create a new Susu Group</Text>
+          <Text style={styles.desc}>Manage Your Susu Group</Text>
         </Card>
 
         <Card title="Make Deposit">
