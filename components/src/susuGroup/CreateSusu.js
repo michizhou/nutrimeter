@@ -12,11 +12,15 @@ class CreateSusu extends Component {
     this.state = {
       modalVisible: true,
       next: 0,
-      name: '',
-      amount: '',
+      title: '',
+      amount: 0,
       members: [],
       cycles: 0
     }
+
+    // BINDING FOR FUNCTIONS
+    this._onNext = this._onNext.bind(this)
+    this._onBack = this._onBack.bind(this)
   }
 
   render() {
@@ -29,22 +33,39 @@ class CreateSusu extends Component {
             <View style={styles.formBox}>
               <FormLabel>Title</FormLabel>
               <FormInput
-                containerStyle={{ width: 25, padding: 0 }}
-                onChangeText={console.log('KLK')}
+                value={this.state.title}
+                onChangeText={input => this._onInput(input, 'title')}
+              />
+            </View>
+            <View style={styles.formBox}>
+              <FormLabel>Amount</FormLabel>
+              <FormInput
+                value={`${this.state.amount}`}
+                onChangeText={input => this._onInput(input, 'amount')}
+              />
+            </View>
+            <View style={styles.formBox}>
+              <FormLabel>Cycles</FormLabel>
+              <FormInput
+                value={`${this.state.cycles}`}
+                onChangeText={input => this._onInput(input, 'cycles')}
+              />
+            </View>
+            <View style={styles.formBox}>
+              <FormLabel>Members</FormLabel>
+              <FormInput
+                value={this.state.members}
+                onChangeText={input => this._onInput(input, 'members')}
               />
             </View>
 
-            <FormLabel>Amount</FormLabel>
-            <FormInput onChangeText={console.log('KLK')} />
-
-            <FormLabel>Cycles</FormLabel>
-            <FormInput onChangeText={console.log('KLK')} />
-
-            <FormLabel>Members</FormLabel>
-            <FormInput onChangeText={console.log('KLK')} />
-
-            <FormLabel>Start</FormLabel>
-            <FormInput onChangeText={console.log('KLK')} />
+            <View style={styles.formBox}>
+              <FormLabel>Start</FormLabel>
+              <FormInput
+                // value={this.state.title}
+                onChangeText={console.log('KLK')}
+              />
+            </View>
           </View>
         )}
       </View>
@@ -53,15 +74,16 @@ class CreateSusu extends Component {
 
   displayModal() {
     const { next } = this.state
-    const data = [
-      { name: 'What your name', current: 'name' },
-      { name: 'Where are you from?', current: 'amount' },
-      { name: 'KLK manin' }
+    const questions = [
+      { name: 'SUSU Title', current: 'title' },
+      { name: 'Amount', current: 'amount' },
+      { name: 'Cycles', current: 'cycles' },
+      { name: 'Members', current: 'members' }
     ]
 
     // WHILE THE QUESTIONS ARE NOT OVER
-    if (next < data.length) {
-      const current = data[next].current
+    if (next < questions.length) {
+      const current = questions[next].current
       return (
         <Modal
           animationType="slide"
@@ -73,20 +95,22 @@ class CreateSusu extends Component {
         >
           <View style={{ marginTop: 22 }}>
             <View>
-              <Text>Here {data[next].name}</Text>
+              <Text>{questions[next].name}</Text>
               <View style={styles.formBox}>
-                <FormLabel>Title</FormLabel>
+                <FormLabel>{current}</FormLabel>
                 <FormInput
                   // containerStyle={{ width: 25, padding: 0 }}
-                  value={this.state[current]}
+                  value={`${this.state[current]}`}
                   onChangeText={input => this._onInput(input, current)}
                 />
               </View>
 
-              <TouchableHighlight
-                onPress={() => this.setState({ next: next + 1 })}
-              >
+              <TouchableHighlight onPress={this._onNext}>
                 <Text>Next</Text>
+              </TouchableHighlight>
+
+              <TouchableHighlight onPress={this._onBack}>
+                <Text>Back</Text>
               </TouchableHighlight>
 
               <TouchableHighlight
@@ -128,7 +152,14 @@ class CreateSusu extends Component {
 
   // WILL UPDATE FOR NEXT ITERATION
   _onNext() {
+    const { next } = this.state
     this.setState({ next: next + 1 })
+  }
+
+  // WILL UPDATE FOR Previous ITERATION
+  _onBack() {
+    const { next } = this.state
+    this.setState({ next: next - 1 })
   }
 }
 
