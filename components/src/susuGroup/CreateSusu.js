@@ -48,6 +48,7 @@ class CreateSusu extends Component {
             _onInput={this._onInput}
             activeModal={this.activeModal}
             modalVisible={this.state.modalVisible}
+            goBack={this.props.goBack}
           />
         ) : (
           <View>

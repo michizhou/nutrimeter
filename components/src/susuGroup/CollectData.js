@@ -1,26 +1,30 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, TouchableHighlight, Modal, Text } from 'react-native'
+import { View, StyleSheet, TouchableHighlight, Modal } from 'react-native'
 import {
   FormLabel,
   FormInput,
-  FormValidationMessage
+  FormValidationMessage,
+  Text
 } from 'react-native-elements'
+import percent from 'rnative-percent'
 
 class CollectData extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      next: 0
+      next: 0,
+      error: false
     }
 
     // BINDING FOR FUNCTIONS
     this._onNext = this._onNext.bind(this)
     this._onBack = this._onBack.bind(this)
   }
+
   render() {
     const { next } = this.state
     const questions = [
-      { name: 'SUSU Title', current: 'title' },
+      { name: 'SuSu Title', current: 'title' },
       { name: 'Amount', current: 'amount' },
       { name: 'Cycles', current: 'cycles' },
       { name: 'Members', current: 'members' }
@@ -37,11 +41,12 @@ class CollectData extends Component {
             Alert.alert('Modal has been closed.')
           }}
         >
-          <View style={{ marginTop: 22 }}>
+          <View style={styles.dataModal}>
             <View>
-              <Text>{questions[next].name}</Text>
+              <Text h2 style={styles.mainText}>
+                {questions[next].name}
+              </Text>
               <View style={styles.formBox}>
-                <FormLabel>{current}</FormLabel>
                 <FormInput
                   // containerStyle={{ width: 25, padding: 0 }}
                   value={`${this.props[current]}`}
@@ -49,17 +54,23 @@ class CollectData extends Component {
                 />
               </View>
 
-              <TouchableHighlight onPress={this._onNext}>
-                <Text>Next</Text>
-              </TouchableHighlight>
+              <FormValidationMessage>
+                {this.state.error ? '* This field is required' : ''}
+              </FormValidationMessage>
 
-              <TouchableHighlight onPress={this._onBack}>
-                <Text>Back</Text>
-              </TouchableHighlight>
+              <View style={styles.options}>
+                <TouchableHighlight onPress={this._onBack}>
+                  <Text>Back</Text>
+                </TouchableHighlight>
 
-              <TouchableHighlight onPress={() => this.props.activeModal()}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
+                <TouchableHighlight onPress={() => this._onClosed()}>
+                  <Text>Close</Text>
+                </TouchableHighlight>
+
+                <TouchableHighlight onPress={() => this._onNext(current)}>
+                  <Text>Next</Text>
+                </TouchableHighlight>
+              </View>
             </View>
           </View>
         </Modal>
@@ -68,20 +79,34 @@ class CollectData extends Component {
 
     return (
       // DONE WITH ANSWERING THE QUESTIONS
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={this.props.modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.')
-        }}
-      >
-        <View style={{ marginTop: 22 }}>
-          <TouchableHighlight onPress={() => this.props.activeModal()}>
-            <Text>Done</Text>
-          </TouchableHighlight>
-        </View>
-      </Modal>
+      <View style={styles.dataModal}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.props.modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.')
+          }}
+        >
+          <View style={styles.dataModal}>
+            <TouchableHighlight onPress={() => this.props.activeModal()}>
+              <Text h2 style={styles.completeText}>
+                Done
+              </Text>
+            </TouchableHighlight>
+
+            <View style={styles.options}>
+              <TouchableHighlight onPress={() => this._onBack}>
+                <Text>Back</Text>
+              </TouchableHighlight>
+
+              <TouchableHighlight onPress={() => this._onClosed(true)}>
+                <Text>Close</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+      </View>
     )
   }
 
@@ -91,25 +116,61 @@ class CollectData extends Component {
   }
 
   // WILL UPDATE FOR NEXT ITERATION
-  _onNext() {
-    const { next } = this.state
-    this.setState({ next: next + 1 })
+  _onNext(current) {
+    const input = this.props[current]
+
+    if (input <= 0 || input === '') {
+      this.setState({ error: true })
+    } else {
+      const { next } = this.state
+      this.setState({ next: next + 1, error: false })
+    }
   }
 
   // WILL UPDATE FOR Previous ITERATION
   _onBack() {
     const { next } = this.state
-    this.setState({ next: next - 1 })
+
+    if (next > 0) {
+      this.setState({ next: next - 1 })
+    }
+  }
+
+  _onClosed(done = false) {
+    if (done) {
+      this.props.activeModal()
+    }
+    this.props.goBack()
   }
 }
 
 const styles = StyleSheet.create({
-  createSusu: {
-    backgroundColor: '#fff'
-  },
   formBox: {
     display: 'flex',
     flexDirection: 'row'
+  },
+  mainText: {
+    color: '#636e72',
+    textAlign: 'center'
+  },
+  completeText: {
+    color: '#00b894',
+    textAlign: 'center'
+  },
+  options: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+
+    // DIMENSIONS
+    width: percent(30),
+    alignSelf: 'center'
+  },
+  dataModal: {
+    // backgroundColor: 'red',
+    justifyContent: 'center',
+    alignContent: 'center',
+    height: percent(90)
   }
 })
 

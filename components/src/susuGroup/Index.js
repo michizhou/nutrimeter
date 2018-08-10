@@ -15,13 +15,14 @@ class SusuGroup extends Component {
     }
 
     this.createSusu = this.createSusu.bind(this)
+    this.goBackMainGroup = this.goBackMainGroup.bind(this)
   }
 
   render() {
     return (
       <View>
         {this.state.create ? (
-          <CreateSusu />
+          <CreateSusu goBack={this.goBackMainGroup} />
         ) : (
           <View style={styles.groupContainer}>
             <Button
@@ -45,6 +46,12 @@ class SusuGroup extends Component {
   createSusu() {
     this.setState({
       create: true
+    })
+  }
+
+  goBackMainGroup() {
+    this.setState({
+      create: false
     })
   }
 }
