@@ -1,3 +1,14 @@
+/* 
+  DEAR ME OF THE FUTURE,
+
+  You are doing pretty well, now you are missing the following:
+
+  * Better Styling everywhere
+  * Date Selection ( SHOULD LOOK FANCY )
+  * Member Selection ( SHOULD LOOK FANCY ) => Look for members in the members collection or add them to guess otherwise
+  * Save to database * ONLY WHEN CONFIRMED AND DIGITALLY SIGNED *
+*/
+
 import React, { Component } from 'react'
 import { View, StyleSheet, TouchableHighlight, Modal, Text } from 'react-native'
 import {
