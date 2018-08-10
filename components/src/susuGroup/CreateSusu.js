@@ -10,12 +10,15 @@
 */
 
 import React, { Component } from 'react'
-import { View, StyleSheet, TouchableHighlight, Modal, Text } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import {
   FormLabel,
   FormInput,
   FormValidationMessage
 } from 'react-native-elements'
+
+// COLLECT DATA MODAL
+import CollectData from './CollectData'
 
 class CreateSusu extends Component {
   constructor(props) {
@@ -29,16 +32,23 @@ class CreateSusu extends Component {
       cycles: 0
     }
 
-    // BINDING FOR FUNCTIONS
-    this._onNext = this._onNext.bind(this)
-    this._onBack = this._onBack.bind(this)
+    this.activeModal = this.activeModal.bind(this)
+    this._onInput = this._onInput.bind(this)
   }
 
   render() {
     return (
       <View style={styles.createSusu}>
         {this.state.modalVisible ? (
-          this.displayModal()
+          <CollectData
+            title={this.state.title}
+            amount={this.state.amount}
+            members={this.state.members}
+            cycles={this.state.cycles}
+            _onInput={this._onInput}
+            activeModal={this.activeModal}
+            modalVisible={this.state.modalVisible}
+          />
         ) : (
           <View>
             <View style={styles.formBox}>
@@ -83,94 +93,12 @@ class CreateSusu extends Component {
     )
   }
 
-  displayModal() {
-    const { next } = this.state
-    const questions = [
-      { name: 'SUSU Title', current: 'title' },
-      { name: 'Amount', current: 'amount' },
-      { name: 'Cycles', current: 'cycles' },
-      { name: 'Members', current: 'members' }
-    ]
-
-    // WHILE THE QUESTIONS ARE NOT OVER
-    if (next < questions.length) {
-      const current = questions[next].current
-      return (
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.')
-          }}
-        >
-          <View style={{ marginTop: 22 }}>
-            <View>
-              <Text>{questions[next].name}</Text>
-              <View style={styles.formBox}>
-                <FormLabel>{current}</FormLabel>
-                <FormInput
-                  // containerStyle={{ width: 25, padding: 0 }}
-                  value={`${this.state[current]}`}
-                  onChangeText={input => this._onInput(input, current)}
-                />
-              </View>
-
-              <TouchableHighlight onPress={this._onNext}>
-                <Text>Next</Text>
-              </TouchableHighlight>
-
-              <TouchableHighlight onPress={this._onBack}>
-                <Text>Back</Text>
-              </TouchableHighlight>
-
-              <TouchableHighlight
-                onPress={() => this.setState({ modalVisible: false })}
-              >
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
-      )
-    }
-
-    // DONE WITH ANSWERING THE QUESTIONS
-    return (
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={this.state.modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.')
-        }}
-      >
-        <View style={{ marginTop: 22 }}>
-          <TouchableHighlight
-            onPress={() => this.setState({ modalVisible: false })}
-          >
-            <Text>Done</Text>
-          </TouchableHighlight>
-        </View>
-      </Modal>
-    )
-  }
-
-  // WILL ADD THE INPUT TO THE STATE
   _onInput(input, current) {
     this.setState({ [current]: input })
   }
 
-  // WILL UPDATE FOR NEXT ITERATION
-  _onNext() {
-    const { next } = this.state
-    this.setState({ next: next + 1 })
-  }
-
-  // WILL UPDATE FOR Previous ITERATION
-  _onBack() {
-    const { next } = this.state
-    this.setState({ next: next - 1 })
+  activeModal() {
+    this.setState({ modalVisible: false })
   }
 }
 
