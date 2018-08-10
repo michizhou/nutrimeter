@@ -8,7 +8,6 @@ export default class Login extends React.Component {
     super(props)
     this.state = { email: '', password: '', errorMessage: null }
 
-    // FUNCTIONS BINDING
     this.handleLogin = this.handleLogin.bind(this)
   }
 

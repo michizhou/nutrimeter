@@ -7,9 +7,6 @@ export default class SignUp extends React.Component {
   constructor(props) {
     super(props)
     this.state = { email: '', password: '', errorMessage: null }
-
-    // FUNCTIONS BINDING
-    this.handleSignup = this.handleSignup.bind(this)
   }
 
   render() {
