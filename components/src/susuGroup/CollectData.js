@@ -13,12 +13,14 @@ class CollectData extends Component {
     super(props)
     this.state = {
       next: 0,
+      done: false,
       error: false
     }
 
     // BINDING FOR FUNCTIONS
     this._onNext = this._onNext.bind(this)
     this._onBack = this._onBack.bind(this)
+    this._onDone = this._onDone.bind(this)
   }
 
   render() {
@@ -48,7 +50,7 @@ class CollectData extends Component {
               </Text>
               <View style={styles.formBox}>
                 <FormInput
-                  // containerStyle={{ width: 25, padding: 0 }}
+                  inputStyle={{ textAlign: 'center' }}
                   value={`${this.props[current]}`}
                   onChangeText={input => this._onInput(input, current)}
                 />
@@ -89,18 +91,18 @@ class CollectData extends Component {
           }}
         >
           <View style={styles.dataModal}>
-            <TouchableHighlight onPress={() => this.props.activeModal()}>
+            <TouchableHighlight onPress={this._onDone}>
               <Text h2 style={styles.completeText}>
                 Done
               </Text>
             </TouchableHighlight>
 
             <View style={styles.options}>
-              <TouchableHighlight onPress={() => this._onBack}>
+              <TouchableHighlight onPress={this._onBack}>
                 <Text>Back</Text>
               </TouchableHighlight>
 
-              <TouchableHighlight onPress={() => this._onClosed(true)}>
+              <TouchableHighlight onPress={this._onClosed}>
                 <Text>Close</Text>
               </TouchableHighlight>
             </View>
@@ -108,6 +110,11 @@ class CollectData extends Component {
         </Modal>
       </View>
     )
+  }
+
+  _onDone() {
+    this.setState({ done: true })
+    this.props.activeModal()
   }
 
   // WILL ADD THE INPUT TO THE STATE
@@ -131,13 +138,13 @@ class CollectData extends Component {
   _onBack() {
     const { next } = this.state
 
-    if (next > 0) {
+    if (next > 0 || this.state.done) {
       this.setState({ next: next - 1 })
     }
   }
 
-  _onClosed(done = false) {
-    if (done) {
+  _onClosed() {
+    if (this.state.done) {
       this.props.activeModal()
     }
     this.props.goBack()
