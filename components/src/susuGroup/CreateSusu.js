@@ -14,11 +14,13 @@ import { View, StyleSheet } from 'react-native'
 import {
   FormLabel,
   FormInput,
-  FormValidationMessage
+  FormValidationMessage,
+  Button
 } from 'react-native-elements'
 
 // COLLECT DATA MODAL
 import CollectData from './CollectData'
+import percent from 'rnative-percent'
 
 class CreateSusu extends Component {
   constructor(props) {
@@ -29,11 +31,13 @@ class CreateSusu extends Component {
       title: '',
       amount: 0,
       members: [],
-      cycles: 0
+      cycles: 0,
+      startDate: ''
     }
 
     this.activeModal = this.activeModal.bind(this)
     this._onInput = this._onInput.bind(this)
+    this._onSubmit = this._onSubmit.bind(this)
   }
 
   render() {
@@ -48,50 +52,69 @@ class CreateSusu extends Component {
             _onInput={this._onInput}
             activeModal={this.activeModal}
             modalVisible={this.state.modalVisible}
+            startDate={this.state.startDate}
             goBack={this.props.goBack}
           />
         ) : (
           <View>
             <View style={styles.formBox}>
-              <FormLabel>Title</FormLabel>
+              <FormLabel labelStyle={styles.formLabel}>Title</FormLabel>
               <FormInput
+                inputStyle={styles.formInput}
                 value={this.state.title}
                 onChangeText={input => this._onInput(input, 'title')}
               />
             </View>
             <View style={styles.formBox}>
-              <FormLabel>Amount</FormLabel>
+              <FormLabel labelStyle={styles.formLabel}>Amount</FormLabel>
               <FormInput
+                inputStyle={styles.formInput}
                 value={`${this.state.amount}`}
                 onChangeText={input => this._onInput(input, 'amount')}
               />
             </View>
             <View style={styles.formBox}>
-              <FormLabel>Cycles</FormLabel>
+              <FormLabel labelStyle={styles.formLabel}>Cycles</FormLabel>
               <FormInput
+                inputStyle={styles.formInput}
                 value={`${this.state.cycles}`}
                 onChangeText={input => this._onInput(input, 'cycles')}
               />
             </View>
             <View style={styles.formBox}>
-              <FormLabel>Members</FormLabel>
+              <FormLabel labelStyle={styles.formLabel}>Members</FormLabel>
               <FormInput
+                inputStyle={styles.formInput}
                 value={this.state.members}
                 onChangeText={input => this._onInput(input, 'members')}
               />
             </View>
 
             <View style={styles.formBox}>
-              <FormLabel>Start</FormLabel>
+              <FormLabel labelStyle={styles.formLabel}>Start Date</FormLabel>
               <FormInput
-                // value={this.state.title}
-                onChangeText={console.log('KLK')}
+                inputStyle={styles.formInput}
+                value={this.state.startDate}
+                onChangeText={input => this._onInput(input, 'startDate')}
               />
             </View>
+
+            <Button
+              buttonStyle={styles.confirmButton}
+              large
+              icon={{ name: 'send-secure', type: 'material-community' }}
+              title="Confirm"
+              onPress={this._onSubmit}
+            />
           </View>
         )}
       </View>
     )
+  }
+
+  _onSubmit() {
+    console.log(this.state)
+    this.props.goBack()
   }
 
   _onInput(input, current) {
@@ -105,11 +128,26 @@ class CreateSusu extends Component {
 
 const styles = StyleSheet.create({
   createSusu: {
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    height: percent(100)
   },
   formBox: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'column',
+    justifyContent: 'center'
+  },
+  formLabel: {
+    textAlign: 'center',
+    fontSize: 20
+  },
+  formInput: {
+    textAlign: 'center',
+    fontSize: 15,
+    justifyContent: 'center'
+  },
+  confirmButton: {
+    backgroundColor: '#27ae60',
+    marginTop: percent(6)
   }
 })
 

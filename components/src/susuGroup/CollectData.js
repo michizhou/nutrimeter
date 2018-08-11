@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, TouchableHighlight, Modal } from 'react-native'
-import {
-  FormLabel,
-  FormInput,
-  FormValidationMessage,
-  Text
-} from 'react-native-elements'
+import { FormInput, FormValidationMessage, Text } from 'react-native-elements'
+import DatePicker from 'react-native-datepicker'
 import percent from 'rnative-percent'
 
 class CollectData extends Component {
@@ -21,6 +17,7 @@ class CollectData extends Component {
     this._onNext = this._onNext.bind(this)
     this._onBack = this._onBack.bind(this)
     this._onDone = this._onDone.bind(this)
+    this._onClosed = this._onClosed.bind(this)
   }
 
   render() {
@@ -29,11 +26,14 @@ class CollectData extends Component {
       { name: 'SuSu Title', current: 'title' },
       { name: 'Amount', current: 'amount' },
       { name: 'Cycles', current: 'cycles' },
-      { name: 'Members', current: 'members' }
+      { name: 'Members', current: 'members' },
+      { name: 'Starting Date', current: 'startDate' }
     ]
 
     if (next < questions.length) {
       const current = questions[next].current
+      const today = new Date().toLocaleDateString()
+
       return (
         <Modal
           animationType="slide"
@@ -48,12 +48,41 @@ class CollectData extends Component {
               <Text h2 style={styles.mainText}>
                 {questions[next].name}
               </Text>
+
               <View style={styles.formBox}>
-                <FormInput
-                  inputStyle={{ textAlign: 'center' }}
-                  value={`${this.props[current]}`}
-                  onChangeText={input => this._onInput(input, current)}
-                />
+                {current !== 'startDate' ? (
+                  <FormInput
+                    inputStyle={{ textAlign: 'center' }}
+                    value={`${this.props[current]}`}
+                    onChangeText={input => this._onInput(input, current)}
+                  />
+                ) : (
+                  <DatePicker
+                    style={{
+                      width: 200,
+                      marginVertical: 7
+                    }}
+                    date={this.props.startDate}
+                    mode="date"
+                    placeholder="select date"
+                    format="MM-DD-YYYY"
+                    minDate={today}
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0
+                      },
+                      dateInput: {
+                        marginLeft: 36
+                      }
+                    }}
+                    onDateChange={date => this._onInput(date, current)}
+                  />
+                )}
               </View>
 
               <FormValidationMessage>
@@ -65,7 +94,7 @@ class CollectData extends Component {
                   <Text>Back</Text>
                 </TouchableHighlight>
 
-                <TouchableHighlight onPress={() => this._onClosed()}>
+                <TouchableHighlight onPress={this._onClosed}>
                   <Text>Close</Text>
                 </TouchableHighlight>
 
@@ -91,7 +120,10 @@ class CollectData extends Component {
           }}
         >
           <View style={styles.dataModal}>
-            <TouchableHighlight onPress={this._onDone}>
+            <TouchableHighlight
+              onPress={this._onDone}
+              style={styles.doneCircle}
+            >
               <Text h2 style={styles.completeText}>
                 Done
               </Text>
@@ -154,14 +186,15 @@ class CollectData extends Component {
 const styles = StyleSheet.create({
   formBox: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   mainText: {
     color: '#636e72',
     textAlign: 'center'
   },
   completeText: {
-    color: '#00b894',
+    color: '#fff',
     textAlign: 'center'
   },
   options: {
@@ -178,6 +211,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     height: percent(90)
+  },
+  doneCircle: {
+    padding: 5,
+    borderRadius: 100,
+    backgroundColor: '#27ae60',
+    alignSelf: 'center',
+    height: percent(9),
+    width: percent(30, 'width'),
+    shadowColor: 'red'
   }
 })
 

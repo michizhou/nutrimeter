@@ -4957,7 +4957,7 @@ mkdirp@*, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.1:
   dependencies:
     minimist "0.0.8"
 
-moment@2.x.x, moment@^2.10.6:
+moment@2.x.x, moment@^2.10.6, moment@^2.22.0:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
@@ -5801,6 +5801,12 @@ react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.0.0-beta.3.tgz#2167af86bbc9f964bd45bd5f37684e5b54965e32"
 
+react-native-datepicker@^1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.7.2.tgz#58d0822591a0ac9b32aba082650222a0ee29669d"
+  dependencies:
+    moment "^2.22.0"
+
 react-native-dismiss-keyboard@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-dismiss-keyboard/-/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"
@@ -6379,9 +6385,9 @@ rimraf@~2.4.0:
   dependencies:
     glob "^6.0.1"
 
-rnative-percent@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/rnative-percent/-/rnative-percent-1.0.0.tgz#46b4be046c0c90bacfb6206214ab3faa4c3faf45"
+rnative-percent@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/rnative-percent/-/rnative-percent-1.1.0.tgz#30bb4e13abf6ce3f3b83af60489b54da75ea69d2"
 
 rsvp@^3.3.3:
   version "3.6.2"
