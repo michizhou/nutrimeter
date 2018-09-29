@@ -1,39 +1,14 @@
 import React from 'react'
-import { StyleSheet, Text, Platform, Image, View } from 'react-native'
-import { auth } from 'firebase'
-import percent from 'rnative-percent'
+import { Text, View } from 'react-native'
 
-// Navigation
-import NavBoxes from './navigation/NavBoxes'
-
-export default class Index extends React.Component {
-  state = { currentUser: null }
-
-  componentDidMount() {
-    const { currentUser } = auth()
-    this.setState({ currentUser })
-  }
-
+class App extends React.Component {
   render() {
-    const { navigate } = this.props.navigation
-    const { currentUser } = this.state
     return (
-      <View style={styles.container}>
-        <NavBoxes
-          navigate={navigate}
-          account="Account"
-          susuGroup="SusuGroup"
-          deposit="Deposit"
-        />
+      <View>
+        <Text>Open up App.js to start working on your app!</Text>
       </View>
     )
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: '#f1f2f6',
-    height: percent(100)
-  }
-})
+export default App
