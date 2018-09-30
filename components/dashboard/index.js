@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, StyleSheet, StatusBar} from 'react-native'
-import { Button} from 'react-native-elements';
+import { Button, Card, Slider} from 'react-native-elements';
 import { Constants } from 'expo';
 
 
@@ -8,29 +8,37 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            value:0
         }
     }
 
     render() {
         return (
         <View>
-            <View>
-                <Text> History </Text>
-                <Text> Calendar goes here</Text>
-            </View>
-            <View>
-                <Text> Today </Text>
-                <Button> Button showing number of calories </Button>
-            </View>
-            <View>
-                <Text> Status Bar </Text>
-                <Text> Animate as number of calories changes </Text>
-            </View>
-            <View>
-                <Text> bottom tab Bar </Text>
-                <Text> Profile and homescreen tab</Text>
-            </View>
+            {/* <StatusBar
+                backgroundColor="blue"
+                barStyle="light-content"
+            /> */}
+            <Card title="History">
+                {
+                    
+                }
+            </Card>
+            <Card title="Today">
+                {
+                    <Button
+                        large
+                        title="# Calories" />
+                }
+            </Card>
+            <Card>
+                {
+                    <Slider
+                        value={this.state.value}
+                        onValueChange={(value) => this.setState({value})}/>
+                }
+            </Card>
+
         </View>
         )
     }
