@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, StatusBar} from 'react-native'
+import { Text, View, StyleSheet, StatusBar, Animated} from 'react-native'
 import { Button, Card, Slider} from 'react-native-elements';
 import { Constants } from 'expo';
 
@@ -8,13 +8,24 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            value:0
+            sliderValue: 0,
+            target:40
         }
+    }
+
+    componentDidMount() {
+        let moveSlider =  setInterval(() => {
+            this.setState(prevState => ({ sliderValue: prevState.sliderValue + 1 }) )
+            if(this.state.sliderValue == this.state.target) {
+                clearInterval(moveSlider);
+            }
+        }, 75);
+        
     }
 
     render() {
         return (
-        <View>
+        <View style={styles.container}>
             {/* <StatusBar
                 backgroundColor="blue"
                 barStyle="light-content"
@@ -28,14 +39,19 @@ class Dashboard extends React.Component {
                 {
                     <Button
                         large
-                        title="# Calories" />
+                        title={`${this.state.sliderValue} Calories`} />
                 }
             </Card>
             <Card>
                 {
-                    <Slider
-                        value={this.state.value}
-                        onValueChange={(value) => this.setState({value})}/>
+                    <View>
+                        <Slider
+                            value={this.state.sliderValue}
+                            maximumValue={100}
+                            onValueChange={(value) => this.setState({value})}/>
+                        <Text>Value: {this.state.sliderValue}</Text>
+
+                    </View>
                 }
             </Card>
 
@@ -49,7 +65,6 @@ const styles = StyleSheet.create({
         flex:1,
         marginTop: Constants.statusBarHeight,
         justifyContent: 'space-evenly',
-        alignItems: 'center',
     }
 })
 
