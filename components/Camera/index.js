@@ -1,4 +1,5 @@
 import React from 'react'
+import percent from 'rnative-percent'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { Camera, Permissions } from 'expo'
 
@@ -39,7 +40,7 @@ export default class CameraComponent extends React.Component {
         <View style={{ flex: 1 }}>
           <Camera
             ref={ref => (this.camera = ref)}
-            style={{ height: 500 }}
+            style={{ height: percent(100), alignSelf: 'flex-end' }}
             type={this.state.type}
           >
             <View
@@ -68,16 +69,21 @@ export default class CameraComponent extends React.Component {
                   style={{ fontSize: 18, marginBottom: 10, color: 'white' }}
                 >
                   {' '}
-                  Flip{' '}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
-                  flex: 1,
+                  // PROPERTIES
                   backgroundColor: '#428bca',
-                  padding: 10,
                   alignSelf: 'flex-end',
-                  alignItems: 'center'
+                  justifyContent: 'center',
+                  alignItems: 'center',
+
+                  // DIMENSIONS
+                  padding: 8,
+                  paddingBottom: percent(15),
+                  borderRadius: 100,
+                  width: percent(100, 'width')
                 }}
                 onPress={() => {
                   this.takePicture()
@@ -85,11 +91,12 @@ export default class CameraComponent extends React.Component {
               >
                 <Text
                   style={{
-                    fontSize: 18,
-                    color: '#5bc0de'
+                    marginTop: 10,
+                    fontSize: 20,
+                    color: '#fa983a'
                   }}
                 >
-                  Capture
+                  Track Nutrition
                 </Text>
               </TouchableOpacity>
             </View>
@@ -112,7 +119,7 @@ export default class CameraComponent extends React.Component {
   }
 
   uploadPicture() {
-    const url = 'https://bb286337.ngrok.io/recognize'
+    const url = 'https://15e7bd6c.ngrok.io/recognize'
 
     const form = new FormData()
 
