@@ -2,6 +2,7 @@ import React from 'react'
 import percent from 'rnative-percent'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { Camera, Permissions } from 'expo'
+import { database } from 'firebase'
 
 import axios from 'axios'
 
@@ -119,7 +120,7 @@ export default class CameraComponent extends React.Component {
   }
 
   uploadPicture() {
-    const url = 'https://15e7bd6c.ngrok.io/recognize'
+    const url = 'https://dd226c54.ngrok.io/recognize'
 
     const form = new FormData()
 
@@ -137,10 +138,16 @@ export default class CameraComponent extends React.Component {
       })
 
       .then(res => {
-        this.setState({
-          textData: res.data,
-          submit: true
-        })
+        const data = res.data
+        database()
+          .ref('users/user1')
+          .set({
+            calories: data.calories,
+            carbs: data.carbs,
+            fat: data.fat,
+            name: data.name,
+            protein: data.protein
+          })
       })
       .catch(err => console.log(err))
   }
