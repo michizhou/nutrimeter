@@ -9,10 +9,10 @@ class Profile extends React.Component {
     super(props)
     this.state = {
       username: '',
-      age: 0,
+      age: '',
       gender: '',
       goal: 0,
-      weight: 0
+      weight: ''
     }
   }
 

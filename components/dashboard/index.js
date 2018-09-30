@@ -9,17 +9,17 @@ class Dashboard extends React.Component {
         super(props)
         this.state = {
             sliderValue: 0,
-            target:40
+            target:1300
         }
     }
 
     componentDidMount() {
         let moveSlider =  setInterval(() => {
-            this.setState(prevState => ({ sliderValue: prevState.sliderValue + 1 }) )
+            this.setState(prevState => ({ sliderValue: prevState.sliderValue + 10 }) )
             if(this.state.sliderValue == this.state.target) {
                 clearInterval(moveSlider);
             }
-        }, 75);
+        }, 10);
     }
 
     render() {
@@ -46,7 +46,7 @@ class Dashboard extends React.Component {
                     <View>
                         <Slider
                             value={this.state.sliderValue}
-                            maximumValue={100}
+                            maximumValue={1500}
                             onValueChange={(value) => this.setState({value})}/>
                         <Text>Value: {this.state.sliderValue}</Text>
 
