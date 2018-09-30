@@ -1,36 +1,59 @@
 import React from 'react'
 import { Text, View, StyleSheet, StatusBar} from 'react-native'
-import { Button} from 'react-native-elements';
-import { Constants } from 'expo';
-
+import { Button, Card, Slider} from 'react-native-elements'
+import { Constants } from 'expo'
+import History from '../History'
 
 class Dashboard extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-
+            sliderValue: 0,
+            target:40
         }
+    }
+
+    componentDidMount() {
+        let moveSlider =  setInterval(() => {
+            this.setState(prevState => ({ sliderValue: prevState.sliderValue + 1 }) )
+            if(this.state.sliderValue == this.state.target) {
+                clearInterval(moveSlider);
+            }
+        }, 75);
     }
 
     render() {
         return (
-        <View>
-            <View>
-                <Text> History </Text>
-                <Text> Calendar goes here</Text>
-            </View>
-            <View>
-                <Text> Today </Text>
-                <Button> Button showing number of calories </Button>
-            </View>
-            <View>
-                <Text> Status Bar </Text>
-                <Text> Animate as number of calories changes </Text>
-            </View>
-            <View>
-                <Text> bottom tab Bar </Text>
-                <Text> Profile and homescreen tab</Text>
-            </View>
+        <View style={styles.container}>
+            {/* <StatusBar
+                backgroundColor="blue"
+                barStyle="light-content"
+            /> */}
+            <Card title="History">
+                {
+                   <History /> 
+                }
+            </Card>
+            <Card title="Today">
+                {
+                    <Button
+                        large
+                        title={`${this.state.sliderValue} Calories`} />
+                }
+            </Card>
+            <Card>
+                {
+                    <View>
+                        <Slider
+                            value={this.state.sliderValue}
+                            maximumValue={100}
+                            onValueChange={(value) => this.setState({value})}/>
+                        <Text>Value: {this.state.sliderValue}</Text>
+
+                    </View>
+                }
+            </Card>
+
         </View>
         )
     }
@@ -41,7 +64,6 @@ const styles = StyleSheet.create({
         flex:1,
         marginTop: Constants.statusBarHeight,
         justifyContent: 'space-evenly',
-        alignItems: 'center',
     }
 })
 
