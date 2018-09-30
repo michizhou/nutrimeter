@@ -1,8 +1,8 @@
 import React from 'react'
-import { Text, View, StyleSheet, StatusBar, Animated} from 'react-native'
-import { Button, Card, Slider} from 'react-native-elements';
-import { Constants } from 'expo';
-
+import { Text, View, StyleSheet, StatusBar} from 'react-native'
+import { Button, Card, Slider} from 'react-native-elements'
+import { Constants } from 'expo'
+import History from '../History'
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -20,7 +20,6 @@ class Dashboard extends React.Component {
                 clearInterval(moveSlider);
             }
         }, 75);
-        
     }
 
     render() {
@@ -32,7 +31,7 @@ class Dashboard extends React.Component {
             /> */}
             <Card title="History">
                 {
-                    
+                   <History /> 
                 }
             </Card>
             <Card title="Today">

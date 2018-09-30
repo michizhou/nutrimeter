@@ -4,12 +4,12 @@ import Dashboard from './dashboard';
 import Profile from './Profile';
 import CameraComponent from './Camera';
 import { createBottomTabNavigator } from 'react-navigation';
-
 export default createBottomTabNavigator(
   {
       Home: { screen: Dashboard },
       Camera: { screen: CameraComponent },
-      Profile: { screen: Profile },    
+      Profile: { screen: Profile }, 
+   
   },
   {
       navigationOptions: ({ navigation }) => ({
