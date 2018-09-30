@@ -1,39 +1,39 @@
 import React from 'react'
-import { StyleSheet, Text, Platform, Image, View } from 'react-native'
-import { auth } from 'firebase'
-import percent from 'rnative-percent'
+import { Icon } from 'react-native-elements'
+import Dashboard from './dashboard'
+import Profile from './Profile'
+import CameraComponent from './Camera'
+import { createBottomTabNavigator } from 'react-navigation'
+export default createBottomTabNavigator(
+  {
+    Home: { screen: Dashboard },
+    Camera: { screen: CameraComponent },
+    Profile: { screen: Profile }
+  },
+  {
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state
+        let iconName
+        if (routeName === 'Home') {
+          iconName = 'home'
+        } else if (routeName === 'Profile') {
+          iconName = 'user-o'
+        } else {
+          iconName = 'camera'
+        }
 
-// Navigation
-import NavBoxes from './navigation/NavBoxes'
-
-export default class Index extends React.Component {
-  state = { currentUser: null }
-
-  componentDidMount() {
-    const { currentUser } = auth()
-    this.setState({ currentUser })
+        return (
+          <Icon
+            name={iconName}
+            size={30}
+            color={tintColor}
+            type="font-awesome"
+          />
+        )
+      }
+    }),
+    animationEnabled: true,
+    swipeEnabled: true
   }
-
-  render() {
-    const { navigate } = this.props.navigation
-    const { currentUser } = this.state
-    return (
-      <View style={styles.container}>
-        <NavBoxes
-          navigate={navigate}
-          account="Account"
-          susuGroup="SusuGroup"
-          deposit="Deposit"
-        />
-      </View>
-    )
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: '#f1f2f6',
-    height: percent(100)
-  }
-})
+)
