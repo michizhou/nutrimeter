@@ -2,12 +2,14 @@ import React from 'react'
 import { Icon} from 'react-native-elements';
 import Dashboard from './dashboard';
 import Profile from './Profile';
+import CameraComponent from './Camera';
 import { createBottomTabNavigator } from 'react-navigation';
 
 export default createBottomTabNavigator(
   {
       Home: { screen: Dashboard },
-      Profile: { screen: Profile },
+      Camera: { screen: CameraComponent },
+      Profile: { screen: Profile },    
   },
   {
       navigationOptions: ({ navigation }) => ({
@@ -18,6 +20,8 @@ export default createBottomTabNavigator(
               iconName = 'home';
             } else if (routeName === 'Profile') {
               iconName = 'user-o';
+            } else {
+              iconName = 'camera'
             }
 
             return <Icon name={iconName} size={30} color={tintColor} type='font-awesome' />;
