@@ -1,14 +1,30 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Icon} from 'react-native-elements';
+import Dashboard from './dashboard';
+import Profile from './Profile';
+import { createBottomTabNavigator } from 'react-navigation';
 
-class App extends React.Component {
-  render() {
-    return (
-      <View>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    )
+export default createBottomTabNavigator(
+  {
+      Home: { screen: Dashboard },
+      Profile: { screen: Profile },
+  },
+  {
+      navigationOptions: ({ navigation }) => ({
+          tabBarIcon: ({ focused, tintColor }) => {
+            const { routeName } = navigation.state;
+            let iconName;
+            if (routeName === 'Home') {
+              iconName = 'home';
+            } else if (routeName === 'Profile') {
+              iconName = 'user-o';
+            }
+
+            return <Icon name={iconName} size={30} color={tintColor} type='font-awesome' />;
+          },
+      }),
+      animationEnabled: true,
+      swipeEnabled: true,
   }
-}
+);
 
-export default App
